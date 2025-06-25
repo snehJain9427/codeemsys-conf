@@ -119,6 +119,30 @@ fi
 # Create the build directory if not already present
 mkdir -p "${BUILDDIR}/conf"
 
+#local.conf
+cat >| ${BUILDDIR}/conf/local.conf << EOF
+# This configuration file is dynamically generated everytime 
+# set_bb_env.sh is sourced to set up workspace. DO NOT EDIT 
+#-------------------------------------------------------------------------
+
+EOF
+cat ${scriptdir}/local.conf >> ${BUILDDIR}/conf/local.conf
+
+#auto.conf
+cat >| ${BUILDDIR}/conf/auto.conf << EOF
+# This configuration file is dynamically generated everytime 
+# set_bb_env.sh is sourced to set up workspace. DO NOT EDIT 
+#-------------------------------------------------------------------------
+
+DISTRO ?= "poky"
+MACHINE ?= "${MACHINE}"
+SSTATE_DIR = "${WS}/sstate-cache"
+DL_DIR = "${WS}/downloads"
+
+EOF
+
+
+#bblayer.conf
 # Generate bblayers.conf using the helper script
 bash "${scriptdir}/get-bblayers.sh" "${BUILDDIR}"
 
